@@ -1,5 +1,7 @@
 package com.katyrin.popularlibraries
 
 interface MainView {
-    fun setButtonText(index: Int, text: String)
+    fun setButtonTextOne(text: String)
+    fun setButtonTextTwo(text: String)
+    fun setButtonTextThree(text: String)
 }
