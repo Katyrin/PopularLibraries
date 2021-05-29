@@ -1,37 +1,16 @@
 package com.katyrin.githubusers.presenter
 
-import com.katyrin.githubusers.data.GithubUser
-import com.katyrin.githubusers.data.GithubUsersRepo
+import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 
-class MainPresenter(val userRepo: GithubUsersRepo) : MvpPresenter<MainView>() {
-
-    class UsersListPresenter : IUserListPresenter {
-        val users = mutableListOf<GithubUser>()
-        override var itemClickListener: ((UserItemView) -> Unit)? = null
-
-        override fun bindView(view: UserItemView) {
-            val user = users[view.pos]
-            view.setLogin(user.login)
-        }
-
-        override fun getCount() = users.size
-    }
-
-    val usersListPresenter = UsersListPresenter()
+class MainPresenter(val router: Router, val screens: IScreens) : MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.init()
-        loadData()
-        usersListPresenter.itemClickListener = { itemView ->
-
-        }
+        router.replaceScreen(screens.users())
     }
 
-    fun loadData() {
-        val users = userRepo.getUsers()
-        usersListPresenter.users.addAll(users)
-        viewState.updateList()
+    fun backClicked() {
+        router.exit()
     }
 }
