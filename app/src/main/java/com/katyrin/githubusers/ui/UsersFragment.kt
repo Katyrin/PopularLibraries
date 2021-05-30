@@ -1,13 +1,9 @@
 package com.katyrin.githubusers.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.katyrin.githubusers.App
-import com.katyrin.githubusers.R
 import com.katyrin.githubusers.data.GithubUsersRepo
 import com.katyrin.githubusers.databinding.FragmentUsersBinding
 import com.katyrin.githubusers.presenter.BackButtonListener
@@ -23,7 +19,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     }
 
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(GithubUsersRepo(), App.instance.router)
+        UsersPresenter(GithubUsersRepo(), App.instance.router, AndroidScreens())
     }
     var adapter: UsersRVAdapter? = null
     private var vb: FragmentUsersBinding? = null
@@ -41,7 +37,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     }
 
     override fun init() {
-        vb?.rvUsers?.layoutManager = LinearLayoutManager(context)
         adapter = UsersRVAdapter(presenter.usersListPresenter)
         vb?.rvUsers?.adapter = adapter
     }

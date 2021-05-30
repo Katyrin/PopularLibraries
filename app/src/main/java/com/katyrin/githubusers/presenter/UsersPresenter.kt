@@ -5,8 +5,11 @@ import com.katyrin.githubusers.data.GithubUser
 import com.katyrin.githubusers.data.GithubUsersRepo
 import moxy.MvpPresenter
 
-class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) :
-    MvpPresenter<UsersView>() {
+class UsersPresenter(
+    private val usersRepo: GithubUsersRepo,
+    private val router: Router,
+    private val screens: IScreens
+) : MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
         val users = mutableListOf<GithubUser>()
@@ -27,7 +30,8 @@ class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) :
         viewState.init()
         loadData()
         usersListPresenter.itemClickListener = { itemView ->
-
+            val user = usersListPresenter.users[itemView.pos]
+            router.navigateTo(screens.user(user))
         }
     }
 

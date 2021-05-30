@@ -28,7 +28,7 @@ class UsersRVAdapter(val presenter: IUserListPresenter) :
 
     override fun getItemCount() = presenter.getCount()
 
-    inner class ViewHolder(val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
+    inner class ViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
         UserItemView {
         override var pos: Int = -1
 
